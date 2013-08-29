@@ -1,6 +1,7 @@
 # Severian
 
-A simple ruby gem for extracting info from rpms.
+A simple ruby gem for extracting info from rpms. It essentially calls `rpm` from the
+command line to extract the info.
 
 ## Requirements
 
@@ -22,7 +23,28 @@ Or install it yourself as:
 
 ## Usage
 
-TBD
+There are two ways to instantiate an RPM object. First from a filepath to an
+rpm:
+
+```ruby
+Severian::RPM.extract("/path/to/my_rpm.rpm")
+```
+
+Or you can just pass the information as a hash to #new. God help you if you
+choose to do this.
+
+```ruby
+Severian::RPM.new(my_hash_of_info)
+```
+
+
+## Development
+
+To test out severian in a console from the gem repo, just run:
+
+```
+irb -Ilib -rseverian
+```
 
 ## Contributing
 

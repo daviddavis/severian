@@ -15,5 +15,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Severian::VERSION
 
-  gem.add_development_dependency("debugger")
+  gem.add_development_dependency "debugger"
 end

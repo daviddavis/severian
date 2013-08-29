@@ -1,35 +1,48 @@
-
 module Severian
 
   class RPM
+    SEPARATOR = '---severian---'
 
-    attr_accessor :name, :version, :release, :architecture, :install_date,
-      :group, :size, :license, :signature, :source_rpm, :build_date,
-      :build_host, :relocations, :packager, :vendor, :url, :summary,
-      :description
+    ATTRIBUTES = [:name, :version, :release, :arch, :install_time, :group,
+                  :size, :license, :source_rpm, :build_time, :build_host,
+                  :packager, :vendor, :url, :summary, :description, :epoch
+    ]
+    attr_accessor *ATTRIBUTES, :info, :files, :requires, :provides, :changelog
 
     def self.extract(filepath)
-      data = %x( rpm -qip #{filepath} )
+      data = {}
+      data[:info] = %x( rpm -qip #{filepath} )
+      data[:files] = parse_list %x( rpm -qlp #{filepath} )
+      data[:requires] = parse_list %x( rpm -qp --requires #{filepath} )
+      data[:provides] = parse_list %x( rpm -qp --provides #{filepath} )
+      data[:changelog] = %x( rpm -qp --changelog #{filepath} )
+
+      info = %x( rpm -qp --qf '#{query_format}' #{filepath} )
+      data.merge!(parse_info(info))
       new(data)
     end
 
-    def initialize(data)
-      parse(data)
+    def self.query_format
+      ATTRIBUTES.map { |attr| "%{#{attr.to_s.gsub('_', '').upcase}}" }.join(SEPARATOR)
     end
 
-    def parse(data)
-      lines = data.split(/$/)
-      lines.each_with_index do |line, i|
-        if line =~ /^.*:.*$/
-          field, value = line.split(":").map(&:strip)
-          field = field.gsub(" ", "_").downcase.to_sym
+    def self.parse_info(info)
+      lines = info.split(SEPARATOR).map(&:strip)
+      attrs = {}
+      ATTRIBUTES.each_with_index do |attr, i|
+        attrs[attr] = lines[i]
+      end
 
-          if field == :description
-            self.description = lines[(i + 1)...-1].join
-          elsif methods.include?(field)
-            send("#{field}=", value)
-          end
-        end
+      attrs
+    end
+
+    def self.parse_list(list)
+      list.split(/$/).map(&:strip).reject { |line| line.length == 0 }
+    end
+
+    def initialize(options)
+      options.reject { |key| key == :info }.each do |key, val|
+        send("#{key}=", val)
       end
     end
   end
