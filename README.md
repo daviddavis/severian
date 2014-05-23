@@ -1,4 +1,4 @@
-# Severian
+# Severian [![Build # Status](https://travis-ci.org/daviddavis/severian.png)](http://travis-ci.org/daviddavis/severian)
 
 A simple ruby gem for extracting info from rpms. It essentially calls `rpm` from the
 command line to extract the info.

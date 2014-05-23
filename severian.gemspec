@@ -15,5 +15,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Severian::VERSION
 
-  gem.add_development_dependency "debugger"
+  gem.add_dependency "rake"
+
+  gem.add_development_dependency "pry"
+  gem.add_development_dependency "pry-debugger"
+  gem.add_development_dependency "minitest", "~> 5.3.4"
+  gem.add_development_dependency "mocha", "~> 1.1.0"
 end

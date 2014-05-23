@@ -1,0 +1,2 @@
+pulp-katello-plugins---severian---0.2---severian---1.fc18---severian---noarch---severian---(none)---severian---Development/Languages---severian---29837---severian---GPLv2---severian---pulp-katello-plugins-0.2-1.fc18.src.rpm---severian---1374499921---severian---koji.katello.org---severian---Koji---severian---Koji---severian---https://fedorahosted.org/katello/---severian---Plugins useful for katello interactions with pulp---severian---Provides a collection of platform plugins, client extensions and agent
+handlers that provide RPM support.---severian---(none)
