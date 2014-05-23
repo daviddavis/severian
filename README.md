@@ -43,7 +43,7 @@ Severian::RPM.new(my_hash_of_info)
 To test out severian in a console from the gem repo, just run:
 
 ```
-irb -Ilib -rseverian
+pry -Ilib -rseverian
 ```
 
 ## Contributing
